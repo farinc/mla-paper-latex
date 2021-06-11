@@ -1,0 +1,104 @@
+% This is free and unencumbered software released into the public domain.
+
+% Anyone is free to copy, modify, publish, use, compile, sell, or
+% distribute this software, either in source code form or as a compiled
+% binary, for any purpose, commercial or non-commercial, and by any
+% means.
+
+% In jurisdictions that recognize copyright laws, the author or authors
+% of this software dedicate any and all copyright interest in the
+% software to the public domain. We make this dedication for the benefit
+% of the public at large and to the detriment of our heirs and
+% successors. We intend this dedication to be an overt act of
+% relinquishment in perpetuity of all present and future rights to this
+% software under copyright law.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+% EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+% OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+% ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+% OTHER DEALINGS IN THE SOFTWARE.
+
+% For more information, please refer to <https://unlicense.org>
+
+
+
+% First, define the document here, this is appropriate: 
+% \documentclass[12pt]{article}
+
+% This is the "pre-include" section. Define your first and last name, title, and the appropriate instructor's name and class
+% \newcommand{\lastname}{YourLastName}
+% \newcommand{\firstname}{YourFirstName}
+% \newcommand{\instructorfull}{InstructorName}
+% \newcommand{\className}{className}
+% \newcommand{\titleName}{Title}
+% 
+% Now, include this file with the command:
+% \include{mla.tex}
+% 
+\usepackage[american]{babel} 
+\usepackage{csquotes} 
+\usepackage[hidelinks]{hyperref} % Links otherwise get in the way, so we hide them. Do want you want...
+\usepackage[style=mla-new, backend=biber]{biblatex} % Your weird for not using this stuff...(if not why are you really using latex)
+\usepackage{datetime}
+\usepackage[letterpaper, margin=1.0in]{geometry} %Per mla suggestion, but some instructors deviate...
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enotez} % The modern version of the "endnotes" package. 
+\setenotez{backref, counter-format=alph, list-heading = \begin{center}#1\end{center}} % Here we enable backlinks and switch the counter to alphabetical since usually there are less end-notes and to differentiate between them and footnotes. Also a neat trick, just change the list-heading field to be unformated and centered per MLA standard.
+
+% We like Zapf's Palatino font for both body text and math, otherwise use something else as requested by instructor
+\usepackage{newpxtext,newpxmath}
+
+\newdateformat{dateMLA}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR} % MLA has a specific date standard
+
+\linespread{2} %This is the most "Word"-like double-spacing you get. See https://tex.stackexchange.com/questions/13742/what-does-double-spacing-mean. Otherwise, use the "doublespacing" command from setspace package
+
+\fancyhf{}
+\rhead{\lastname~\thepage}
+
+\renewcommand{\headrulewidth}{0pt} % No headrules for the headers and footers, unless you (and your instructor) are into that...
+\renewcommand{\footrulewidth}{0pt}
+
+% Ensure header 0.5in from top edge: 12pt font is 1/6 inch
+\setlength\headsep{0.333in}
+% Set the header height (complains otherwise)
+\setlength\headheight{14.49998pt}
+% Paragraph indent, 0.5 inches
+\setlength\parindent{0.5in}
+
+\pagestyle{fancy} % Every page uses the same style.
+
+% Custom format of bibliography for MLA
+\newcommand{\printformatedbibliography}{\newpage\begin{center}Works Cited\end{center}\printbibliography[heading=none]}
+
+% Per MLA requirements, endnotes should appear on a extra page before the bibliography with a header (if you dont use, then just remove this and "theendnotes" command)
+\newcommand{\printnotes}{\newpage\printendnotes}
+
+% Useful if you want to introduce an author by their full name initially.
+\newrobustcmd*{\citefirstlastauthor}{\AtNextCite{\DeclareNameAlias{labelname}{given-family}}\citeauthor} 
+
+\newenvironment{paper}{
+\firstname~\lastname \\ 
+\instructorfull\\ 
+\className\\ 
+\dateMLA{\today}\\
+\begin{center}\titleName\end{center} 
+}{
+\printnotes % If your not using endnotes, just comment this out...
+\printformatedbibliography % Most likely, your should keep this
+}
+
+\raggedright %Because MLA is kinda weird...
+
+% The "post-include" section. Simply include your bibliography database file and begin the document. Below is the example code
+%
+% \bibliography{sources.bib} %<-- BTY, you have to do this post-include.
+% \begin{document}
+% \begin{paper}
+% Here be a footnote \footnote{EEEEE! Sup}. Here be a endnote\endnote{EEEEEEEEEEEEEEEEEE! We dont use those often}
+% \end{paper}
+% \end{document}
+% 
