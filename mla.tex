@@ -52,9 +52,11 @@
 % We like Zapf's Palatino font for both body text and math, otherwise use something else as requested by instructor
 \usepackage{newpxtext,newpxmath}
 
+\DeclareLanguageMapping{american}{american-mla}
 \newdateformat{dateMLA}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR} % MLA has a specific date standard
 
-\linespread{2} %This is the most "Word"-like double-spacing you get. See https://tex.stackexchange.com/questions/13742/what-does-double-spacing-mean. Otherwise, use the "doublespacing" command from setspace package
+\setstretch{2.25} % Experimentally derived spacing for word doc style. Not perfect, but at least lines per page are consistant
+\setlength{\parskip}{8pt} % Typically, Word defaults to 8pt line skips, which here is the 'de facto' (much like line-spacing)
 
 \fancyhf{}
 \rhead{\lastname~\thepage}
@@ -66,32 +68,33 @@
 \setlength\headsep{0.333in}
 % Set the header height (complains otherwise)
 \setlength\headheight{14.49998pt}
-% Paragraph indent, 0.5 inches
-\setlength\parindent{0.5in}
 
 \pagestyle{fancy} % Every page uses the same style.
 
 % Custom format of bibliography for MLA
 \newcommand{\printformatedbibliography}{\newpage\begin{center}Works Cited\end{center}\printbibliography[heading=none]}
 
-% Per MLA requirements, endnotes should appear on a extra page before the bibliography with a header (if you dont use, then just remove this and "theendnotes" command)
+% Per MLA requirements, endnotes should appear on a extra page before the bibliography with a header.
 \newcommand{\printnotes}{\newpage\printendnotes}
 
 % Useful if you want to introduce an author by their full name initially.
-\newrobustcmd*{\citefirstlastauthor}{\AtNextCite{\DeclareNameAlias{labelname}{given-family}}\citeauthor} 
+\newrobustcmd*{\citefullname}{\AtNextCite{\DeclareNameAlias{labelname}{given-family}}\citeauthor} 
 
 \newenvironment{paper}{
 \firstname~\lastname \\ 
 \instructorfull\\ 
-\className\\ 
-\dateMLA{\today}\\
-\begin{center}\titleName\end{center} 
+\className
+% \dateMLA{\today}
+% \begin{center}\titleName\end{center}
+\setlength\parindent{0.5in}
 }{
-\printnotes % If your not using endnotes, just comment this out...
+%\printnotes % If your not using endnotes, just comment this out...
 \printformatedbibliography % Most likely, your should keep this
 }
 
-\raggedright %Because MLA is kinda weird...
+\setlength\parindent{0.5in}
+\raggedright
+
 
 % The "post-include" section. Simply include your bibliography database file and begin the document. Below is the example code
 %
